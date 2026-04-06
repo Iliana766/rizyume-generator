@@ -1,0 +1,74 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.step {
+  display: none;
+  margin-bottom: 20px;
+}
+
+.step.active {
+  display: block;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#resume-preview {
+  border: 1px solid #eee;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.error {
+  border-color: #dc3545 !important;
+  background-color: #f8d7da !important;
+}
+
+.error-message {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85em;
+  color: #dc3545;
+}
+
+.photo-preview {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 50%;
+}
+
+.delete-btn {
+  background-color: #ff4757; 
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.delete-btn:hover {
+  background-color: #e53e54; 
+}
