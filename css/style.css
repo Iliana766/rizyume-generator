@@ -43,32 +43,36 @@ button:hover {
   margin-top: 20px;
 }
 
-.error {
-  border-color: #dc3545 !important;
-  background-color: #f8d7da !important;
-}
-
-.error-message {
-  display: block;
-  margin-top: 5px;
-  font-size: 0.85em;
-  color: #dc3545;
-}
-
 .photo-preview {
   max-width: 200px;
   max-height: 200px;
   border-radius: 50%;
 }
 
-.delete-btn {
-  background-color: #ff4757; 
-  border: none;
+.remove-btn {
+  background-color: #e74c3c; 
   color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 8px;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
-.delete-btn:hover {
-  background-color: #e53e54; 
+.remove-btn:hover {
+  background-color: #c0392b; 
+}
+
+.removeBut {
+  background-color: #e74c3c; 
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.removeBut:hover {
+  background-color: #c0392b; 
 }

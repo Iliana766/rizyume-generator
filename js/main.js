@@ -99,8 +99,20 @@ function addExperience() {
         <input name="position" type="text" placeholder="Должность" class="position" required>
         <input name="period" type="text" placeholder="Период работы" class="period" required>
         <textarea name="responsibilities" placeholder="Обязанности" class="responsibilities"></textarea>
+
+        <button type="button" class="remove-btn">Удалить</button>
     `;
   container.appendChild(newItem);
+
+  newItem.querySelector(".remove-btn").addEventListener("click", () => {
+    const items = document.querySelectorAll(".experience-item");
+
+    if (items.length > 1) {
+      newItem.remove();
+    } else {
+      alert("Должен остаться хотя бы один опыт работы");
+    }
+  });
 
   // Добавляем обработчик, который будет удалять пустой блок при удалении всех значений
   newItem.addEventListener("change", () => {
@@ -127,8 +139,31 @@ function addEducation() {
         <input type="text" placeholder="Учебное заведение" class="institution">
         <input type="text" placeholder="Специальность" class="specialty">
         <input type="text" placeholder="Годы обучения" class="years">
+
+        <button type="button" class="removeBut">Удалить</button>
     `;
   container.appendChild(newItem);
+
+  newItem.querySelector(".removeBut").addEventListener("click", () => {
+    const items = document.querySelectorAll(".education-item");
+
+    if (items.length > 1) {
+      newItem.remove();
+    } else {
+      alert("Должно остаться одно поле для заполнения");
+    }
+  });
+
+  newItem.addEventListener("change", () => {
+    const isEmpty =
+      !newItem.querySelector(".company").value &&
+      !newItem.querySelector(".position").value &&
+      !newItem.querySelector(".period").value &&
+      !newItem.querySelector(".responsibilities").value;
+    if (isEmpty) {
+      newItem.remove();
+    }
+  });
 }
 
 function addSkill() {
