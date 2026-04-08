@@ -4,22 +4,25 @@ class PersonalInformation extends HTMLElement {
   connectedCallback() {
     const template = html`
       <form id="step1" class="step active">
+      <h3>ФИО</h3>
         <input
           type="text"
           id="fullName"
           name="fullName"
-          placeholder="ФИО"
+          placeholder="Иванов Иван Иванович"
           required
         />
         <div id="fullNameError" class="error-message"></div>
+        <h3>Email</h3>
         <input
           type="email"
           id="email"
           name="email"
-          placeholder="Email"
+          placeholder="example@mail.ru"
           required
         />
         <div id="emailError" class="error-message"></div>
+        <h3>Номер телефона</h3>
         <input
           type="tel"
           id="phone"
@@ -28,6 +31,7 @@ class PersonalInformation extends HTMLElement {
           required
         />
         <div id="phoneError" class="error-message"></div>
+        <h3>Загрузите фото</h3>
         <input
           type="file"
           id="photo"

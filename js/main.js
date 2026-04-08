@@ -95,10 +95,14 @@ function addExperience() {
   const newItem = document.createElement("div");
   newItem.className = "experience-item";
   newItem.innerHTML = `
-        <input name="company" type="text" placeholder="Компания" class="company" required>
-        <input name="position" type="text" placeholder="Должность" class="position" required>
+        <h3>Компания</h3>
+        <input name="company" type="text" placeholder="Название компании" class="company" required>
+        <h3>Должность</h3>
+        <input name="position" type="text" placeholder="Название должности" class="position" required>
+        <h3>Период работы</h3>
         <input name="period" type="text" placeholder="Период работы" class="period" required>
-        <textarea name="responsibilities" placeholder="Обязанности" class="responsibilities"></textarea>
+        <h3>Обязанности</h3>
+        <textarea name="responsibilities" placeholder="Обязанности по работе" class="responsibilities"></textarea>
     `;
   container.appendChild(newItem);
 

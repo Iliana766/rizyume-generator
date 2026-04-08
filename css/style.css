@@ -72,3 +72,11 @@ button:hover {
 .delete-btn:hover {
   background-color: #e53e54; 
 }
+
+h3 {
+  margin: 0px
+}
+
+.experienceStep {
+  margin-bottom: 30px;
+}
