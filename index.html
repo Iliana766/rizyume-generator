@@ -16,7 +16,7 @@
       <div id="template-selection">
         <h2>Выберите шаблон</h2>
         <select id="template-select">
-          <option value="">-- Выберите профессию --</option>
+          <option disabled selected>Выберите профессию</option>
           <option value="it">IT-специалист</option>
           <option value="marketing">Маркетолог</option>
           <option value="accountant">Бухгалтер</option>
@@ -28,7 +28,7 @@
       <!-- Пошаговое заполнение -->
       <div id="resume-form" style="display: none">
         <!-- Шаг 1: Личные данные -->
-        <personal-information />
+        <personal-information></personal-information>
 
         <!-- Шаг 2: Опыт работы -->
         <form id="step2" class="step">
@@ -76,20 +76,30 @@
 
         <!-- Шаг 3: Образование -->
         <form id="step3" class="step">
-          <h3>Шаг 3: Образование</h3>
+          <h3 class="experienceStep">Шаг 3: Образование</h3>
           <div id="education">
             <div class="education-item">
+              <h3>Учебное заведение</h3>
               <input
                 type="text"
                 placeholder="Учебное заведение"
                 class="institution"
+                required
               />
+              <h3>Специальность</h3>
               <input
                 type="text"
                 placeholder="Специальность"
                 class="specialty"
+                required
               />
-              <input type="text" placeholder="Годы обучения" class="years" />
+              <h3>Годы обучения</h3>
+              <input
+                type="text"
+                placeholder="Укажите годы обучения"
+                class="years"
+                required
+              />
             </div>
           </div>
           <button type="button" onclick="addEducation()">
@@ -100,11 +110,18 @@
         </form>
 
         <form id="step4" class="step">
-          <h3>Шаг 4: Навыки</h3>
+          <h3 class="experienceStep">Шаг 4: Навыки</h3>
           <div id="skills">
             <div class="skill-item">
-              <input type="text" placeholder="Навык" class="skill" />
+              <h3>Навык</h3>
+              <input
+                type="text"
+                placeholder="Укажите свой навык"
+                class="skill"
+                required
+              />
               <select class="level">
+                <option disabled selected>Выберите свой уровень</option>
                 <option value="начальный">Начальный</option>
                 <option value="средний">Средний</option>
                 <option value="продвинутый">Продвинутый</option>
@@ -116,7 +133,7 @@
           <button type="button" onclick="nextStep()">Далее</button>
         </form>
         <form id="step5" class="step">
-          <h3>Шаг 5: Дополнительная информация</h3>
+          <h3 class="experienceStep">Шаг 5: Дополнительная информация</h3>
           <textarea
             id="additional"
             placeholder="Курсы, сертификаты, языки и т.д."
