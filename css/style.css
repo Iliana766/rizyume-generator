@@ -61,22 +61,24 @@ button:hover {
   border-radius: 50%;
 }
 
-.delete-btn {
-  background-color: #ff4757; 
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 3px;
-}
-
-.delete-btn:hover {
-  background-color: #e53e54; 
-}
-
 h3 {
   margin: 0px
 }
 
 .experienceStep {
   margin-bottom: 30px;
+}
+
+.remove-btn {
+  background-color: #e74c3c; 
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b; 
 }

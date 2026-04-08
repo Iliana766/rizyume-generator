@@ -103,9 +103,17 @@ function addExperience() {
         <input name="period" type="text" placeholder="Период работы" class="period" required>
         <h3>Обязанности</h3>
         <textarea name="responsibilities" placeholder="Обязанности по работе" class="responsibilities"></textarea>
+
+        <button type="button" class="remove-btn">Удалить</button>
     `;
   container.appendChild(newItem);
 
+  document.getElementById("work-experience").addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-btn")) {
+      const item = e.target.closest(".experience-item");
+      item.remove();
+    }
+  });
   // Добавляем обработчик, который будет удалять пустой блок при удалении всех значений
   newItem.addEventListener("change", () => {
     const isEmpty =
@@ -131,8 +139,17 @@ function addEducation() {
         <input type="text" placeholder="Учебное заведение" class="institution">
         <input type="text" placeholder="Специальность" class="specialty">
         <input type="text" placeholder="Годы обучения" class="years">
+
+        <button type="button" class="remove-btn">Удалить</button>
     `;
   container.appendChild(newItem);
+
+  document.getElementById("education").addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-btn")) {
+      const item = e.target.closest(".education-item");
+      item.remove();
+    }
+  });
 }
 
 function addSkill() {
@@ -146,8 +163,17 @@ function addSkill() {
             <option value="средний">Средний</option>
             <option value="продвинутый">Продвинутый</option>
         </select>
+
+        <button type="button" class="remove-btn">Удалить</button>
     `;
   container.appendChild(newItem);
+  
+  document.getElementById("skills").addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-btn")) {
+      const item = e.target.closest(".skill-item");
+      item.remove();
+    }
+  });
 }
 
 function generateResume() {
