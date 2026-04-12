@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title>Конструктор резюме</title>
-    <script type="module" src="./js/PersonalInformation.js"></script>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script type="module" src="fonts/roboto-normal.js"></script>
-    <script src="./js/main.js" defer></script>
+    <script type="module" src="./UI/PersonalInformation.js"></script>
+    <script type="module" src="./js/imports.js"></script>
+    <script type="module" src="./js/main.js" defer></script>
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
@@ -15,6 +16,15 @@
       <!-- Выбор шаблона -->
       <div id="template-selection">
         <h2>Выберите шаблон</h2>
+
+        <div id="restore" style="display: none">
+          <h3>Имеется сохранённый черновик</h3>
+          <p>Хотите восстановить ранее введённые данные?</p>
+          <button class="btn btn-primary" data-action="loadFromLocalStorage">
+            Восстановить черновик
+          </button>
+        </div>
+
         <select id="template-select">
           <option disabled selected>Выберите профессию</option>
           <option value="it">IT-специалист</option>
@@ -67,11 +77,11 @@
               ></textarea>
             </div>
           </div>
-          <button type="button" onclick="addExperience()">
+          <button type="button" data-action="addExperience">
             Добавить место работы
           </button>
-          <button type="button" onclick="prevStep()">Назад</button>
-          <button type="button" onclick="nextStep()">Далее</button>
+          <button type="button" data-action="prevStep">Назад</button>
+          <button type="button" data-action="nextStep">Далее</button>
         </form>
 
         <!-- Шаг 3: Образование -->
@@ -102,11 +112,11 @@
               />
             </div>
           </div>
-          <button type="button" onclick="addEducation()">
+          <button type="button" data-action="addEducation">
             Добавить образование
           </button>
-          <button type="button" onclick="prevStep()">Назад</button>
-          <button type="button" onclick="nextStep()">Далее</button>
+          <button type="button" data-action="prevStep">Назад</button>
+          <button type="button" data-action="nextStep">Далее</button>
         </form>
 
         <form id="step4" class="step">
@@ -128,9 +138,9 @@
               </select>
             </div>
           </div>
-          <button type="button" onclick="addSkill()">Добавить навык</button>
-          <button type="button" onclick="prevStep()">Назад</button>
-          <button type="button" onclick="nextStep()">Далее</button>
+          <button type="button" data-action="addSkill">Добавить навык</button>
+          <button type="button" data-action="prevStep">Назад</button>
+          <button type="button" data-action="nextStep">Далее</button>
         </form>
         <form id="step5" class="step">
           <h3 class="experienceStep">Шаг 5: Дополнительная информация</h3>
@@ -138,8 +148,8 @@
             id="additional"
             placeholder="Курсы, сертификаты, языки и т.д."
           ></textarea>
-          <button type="button" onclick="prevStep()">Назад</button>
-          <button type="button" onclick="generateResume()">
+          <button type="button" data-action="prevStep">Назад</button>
+          <button type="button" data-action="generateResume">
             Сгенерировать резюме
           </button>
         </form>
@@ -149,8 +159,8 @@
       <div id="resume-preview" style="display: none">
         <h2>Ваше резюме</h2>
         <div id="preview-content"></div>
-        <button onclick="downloadResume()">Скачать PDF</button>
-        <button onclick="resetForm()">Создать новое резюме</button>
+        <button data-action="downloadResume">Скачать PDF</button>
+        <button data-action="resetForm">Создать новое резюме</button>
       </div>
     </div>
   </body>

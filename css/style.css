@@ -1,3 +1,13 @@
+:root {
+  --secondary: #cd7aee;
+  --success: #10b981;
+  --danger: #ef4444;
+  --light: #ffffff;
+  --dark: #1f2937;
+  --border: #fefefe;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -62,7 +72,7 @@ button:hover {
 }
 
 h3 {
-  margin: 0px
+  margin: 0px;
 }
 
 .experienceStep {
@@ -70,7 +80,7 @@ h3 {
 }
 
 .remove-btn {
-  background-color: #e74c3c; 
+  background-color: #e74c3c;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -80,5 +90,146 @@ h3 {
 }
 
 .remove-btn:hover {
-  background-color: #c0392b; 
+  background-color: #c0392b;
+}
+
+/* Общие стили страницы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+  background-color: var(--light);
+  padding: 20px;
+}
+
+/* Структура страницы (пока под ?) */
+/* .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+max-width: 900px {
+  .container {
+    grid-template-columns: 1fr;
+  }
+} */
+
+/* Динамческие блоки (опыт, образование,навыки) */
+.dynamic-blocks {
+  margin-top: 10px;
+}
+
+.education-item,
+.experience-item,
+.skill-item {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.delete-btn {
+  background-color: var(--danger);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.btn {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+/* Эффект при наведении */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--success);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--dark);
+  transform: translateY(-3px) scale(1.03);
 }

@@ -4,7 +4,7 @@ class PersonalInformation extends HTMLElement {
   connectedCallback() {
     const template = html`
       <form id="step1" class="step active">
-      <h3>ФИО</h3>
+        <h3>ФИО</h3>
         <input
           type="text"
           id="fullName"
@@ -52,7 +52,7 @@ class PersonalInformation extends HTMLElement {
             alt="Предпросмотр фото"
           />
         </div>
-        <button type="button" onclick="nextStep()">Далее</button>
+        <button type="button" data-action="nextStep">Далее</button>
       </form>
     `;
 
