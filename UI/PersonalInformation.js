@@ -8,7 +8,7 @@ class PersonalInformation extends HTMLElement {
         <input
           type="text"
           id="fullName"
-          name="fullName"
+          name="ФИО"
           placeholder="Иванов Иван Иванович"
           required
         />
@@ -26,7 +26,7 @@ class PersonalInformation extends HTMLElement {
         <input
           type="tel"
           id="phone"
-          name="phone"
+          name="телефон"
           placeholder="+7 (999) 999-99-99"
           required
         />
@@ -35,7 +35,7 @@ class PersonalInformation extends HTMLElement {
         <input
           type="file"
           id="photo"
-          name="photo"
+          name="фото"
           accept="image/*"
           aria-label="Загрузите фото"
         />

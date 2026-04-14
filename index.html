@@ -13,6 +13,7 @@
   <body>
     <div class="container">
       <h1>Конструктор профессионального резюме</h1>
+      <div id="result"></div>
       <!-- Выбор шаблона -->
       <div id="template-selection">
         <h2>Выберите шаблон</h2>
@@ -22,6 +23,9 @@
           <p>Хотите восстановить ранее введённые данные?</p>
           <button class="btn btn-primary" data-action="loadFromLocalStorage">
             Восстановить черновик
+          </button>
+          <button class="btn remove-btn" data-action="delFromLocalStorage">
+            Удалить черновик
           </button>
         </div>
 
@@ -47,7 +51,7 @@
             <div class="experience-item">
               <h3>Компания</h3>
               <input
-                name="company"
+                name="Название компании"
                 type="text"
                 placeholder="Название компании"
                 class="company"
@@ -55,15 +59,15 @@
               />
               <h3>Должность</h3>
               <input
-                name="position"
+                name="Должность"
                 type="text"
-                placeholder="Название должности"
+                placeholder="Должности"
                 class="position"
                 required
               />
               <h3>Период работы</h3>
               <input
-                name="period"
+                name="Период работы"
                 type="text"
                 placeholder="Период работы"
                 class="period"
@@ -71,7 +75,7 @@
               />
               <h3>Обязанности</h3>
               <textarea
-                name="responsibilities"
+                name="Обязанности по работе"
                 placeholder="Обязанности по работе"
                 class="responsibilities"
               ></textarea>
@@ -91,6 +95,7 @@
             <div class="education-item">
               <h3>Учебное заведение</h3>
               <input
+                name="Учебное заведение"
                 type="text"
                 placeholder="Учебное заведение"
                 class="institution"
@@ -98,6 +103,7 @@
               />
               <h3>Специальность</h3>
               <input
+                name="Специальность"
                 type="text"
                 placeholder="Специальность"
                 class="specialty"
@@ -105,6 +111,7 @@
               />
               <h3>Годы обучения</h3>
               <input
+                name="Годы обучения"
                 type="text"
                 placeholder="Укажите годы обучения"
                 class="years"
@@ -125,6 +132,7 @@
             <div class="skill-item">
               <h3>Навык</h3>
               <input
+                name="Навык"
                 type="text"
                 placeholder="Укажите свой навык"
                 class="skill"
@@ -145,6 +153,7 @@
         <form id="step5" class="step">
           <h3 class="experienceStep">Шаг 5: Дополнительная информация</h3>
           <textarea
+            name="Дополнительная информация"
             id="additional"
             placeholder="Курсы, сертификаты, языки и т.д."
           ></textarea>
@@ -159,8 +168,11 @@
       <div id="resume-preview" style="display: none">
         <h2>Ваше резюме</h2>
         <div id="preview-content"></div>
+        <button type="button" data-action="prevResumeForm">Назад</button>
         <button data-action="downloadResume">Скачать PDF</button>
         <button data-action="resetForm">Создать новое резюме</button>
+        <button data-action="saveLocalStorage">Сохранить черновик</button>
+        <div id="recomedations">Рекомендации по заполнению</div>
       </div>
     </div>
   </body>

@@ -319,8 +319,6 @@ export function downloadResume() {
     currentY = checkPageBreak(doc, currentY, margin);
   }
 
-  localStorage.setItem("draft", JSON.stringify(resumeData));
-
   doc.save("резюме.pdf");
 }
 

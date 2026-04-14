@@ -5,7 +5,10 @@ import {
   addEducation,
   addSkill,
   generateResume,
+  prevResumeForm,
   loadFromLocalStorage,
+  delFromLocalStorage,
+  saveLocalStorage,
   resetForm,
 } from "./navigationForms.js";
 import { downloadResume } from "./downloadResume.js";
@@ -14,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector('[data-action="loadFromLocalStorage"]')
     .addEventListener("click", loadFromLocalStorage);
+
+  document
+    .querySelector('[data-action="delFromLocalStorage"]')
+    .addEventListener("click", delFromLocalStorage);
 
   document.querySelectorAll('[data-action="nextStep"]').forEach((button) => {
     button.addEventListener("click", nextStep);
@@ -30,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector('[data-action="addEducation"]')
     .addEventListener("click", addEducation);
-  
+
   document
     .querySelector('[data-action="addSkill"]')
     .addEventListener("click", addSkill);
@@ -40,8 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", generateResume);
 
   document
+    .querySelector('[data-action="prevResumeForm"]')
+    .addEventListener("click", prevResumeForm);
+
+  document
     .querySelector('[data-action="downloadResume"]')
     .addEventListener("click", downloadResume);
+
+  document
+    .querySelector('[data-action="saveLocalStorage"]')
+    .addEventListener("click", saveLocalStorage);
 
   document
     .querySelector('[data-action="resetForm"]')

@@ -1,5 +1,3 @@
-const totalSteps = 5;
-
 const photoInput = document.getElementById("photo");
 const photoPreview = document.getElementById("photoPreview");
 const previewContainer = document.getElementById("previewContainer");
@@ -52,40 +50,79 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("template-selection").style.display = "none";
       document.getElementById("resume-form").style.display = "block";
     });
+
+  const forms = document.querySelectorAll("form");
+
+  forms.forEach((form) => {
+    form.addEventListener("input", analyzeFormFill);
+  });
+  // Первоначальный вызов для отображения начального состояния
+  analyzeFormFill();
 });
 
-// Анализ заполненоти полей
-function analyzeCompleteness(data) {
-  const requiredFields = [
-    "fullName",
-    "email",
-    "phone",
-    "experience",
-    "education",
-    "skills",
-  ];
-  let filledCount = 0;
+// Анализ заполнености полей
+export function analyzeFormFill() {
+  const forms = document.querySelectorAll("form");
+  const photoSrc = document.getElementById("photoPreview")?.src;
+  const isPhotoEmpty = !photoSrc || photoSrc === "http://127.0.0.1:5500/";
 
-  requiredFields.forEach((field) => {
-    if (
-      data[field] &&
-      ((Array.isArray(data[field]) && data[field].length > 0) ||
-        (typeof data[field] === "string" && data[field].trim() !== ""))
-    ) {
+  // Создаём массив для всех полей из всех форм
+  let allFields = [];
+
+  // Для каждой формы получаем её поля и добавляем в общий массив
+  forms.forEach((form) => {
+    const formFields = form.querySelectorAll("input, textarea, select");
+    allFields = allFields.concat(Array.from(formFields));
+  });
+
+  let filledCount = 0;
+  let emptyFields = [];
+
+  allFields.forEach((field) => {
+    let isFilled = false;
+
+    if (field.type === "checkbox") {
+      isFilled = field.checked;
+    } else if (field.type === "radio") {
+      const name = field.name;
+      isFilled =
+        document.querySelector(`input[name="${name}"]:checked`) !== null;
+    } else if (field.tagName === "SELECT") {
+      isFilled = field.selectedIndex > 0;
+    } else if (field.type === "file") {
+      isFilled = (field.files && field.files.length > 0) || !isPhotoEmpty;
+    } else {
+      isFilled = field.value.trim() !== "";
+    }
+
+    if (isFilled) {
       filledCount++;
+    } else {
+      emptyFields.push(field.name || field.id || "Без имени");
     }
   });
 
-  const completeness = (filledCount / requiredFields.length) * 100;
-  return {
-    completeness: completeness,
-    filledFields: filledCount,
-    totalFields: requiredFields.length,
-  };
+  const totalFields = allFields.length;
+  const filledPercent =
+    totalFields > 0 ? Math.round((filledCount / totalFields) * 100) : 0;
+
+  // Вывод результата на страницу (с проверкой существования элемента)
+  const resultElement = document.getElementById("result");
+  if (resultElement) {
+    resultElement.innerHTML = `
+      <p><strong>Заполнено:</strong> ${filledCount} из ${totalFields} полей</p>
+      <p><strong>Процент заполненности:</strong> ${filledPercent}%</p>
+      ${
+        emptyFields.length > 0
+          ? `<p><strong>Пустые поля:</strong> ${emptyFields.join(", ")}</p>`
+          : ""
+      }
+    `;
+  }
 }
 
 // Рекомендации по заполнению
-function getStyleRecommendations(data) {
+export function getStyleRecommendations(data) {
   const recommendations = [];
 
   // Проверка длины описания обязанностей
@@ -93,7 +130,7 @@ function getStyleRecommendations(data) {
     const responsibilities = exp.responsibilities || "";
     if (responsibilities.length < 50) {
       recommendations.push(
-        `В опыте работы №${index + 1} описание обязанностей слишком короткое. Добавьте больше деталей о достижениях.`,
+        `В опыте работы №${index + 1} описание обязанностей слишком короткое. Добавьте больше деталей о достижениях.<br>`,
       );
     }
 
@@ -109,7 +146,7 @@ function getStyleRecommendations(data) {
       !actionVerbs.some((verb) => responsibilities.toLowerCase().includes(verb))
     ) {
       recommendations.push(
-        `В опыте работы №${index + 1} используйте глаголы действия (разработал, оптимизировал и т.д.) для описания достижений.`,
+        `В опыте работы №${index + 1} используйте глаголы действия (разработал, оптимизировал и т.д.) для описания достижений.<br>`,
       );
     }
   });
@@ -117,9 +154,16 @@ function getStyleRecommendations(data) {
   // Проверка навыков
   if (data.skills.length < 5) {
     recommendations.push(
-      "Добавьте больше профессиональных навыков (рекомендуется 5–10).",
+      "Добавьте больше профессиональных навыков (рекомендуется 5–10).<br>",
     );
   }
 
+  const recomedationsElement = document.getElementById("recomedations");
+
+  if (recomedationsElement) {
+    recomedationsElement.innerHTML = `
+      <p><strong>Рекомендации по заполнению:<br></strong> ${recommendations.join("<br>")}</p>
+    `;
+  }
   return recommendations;
 }

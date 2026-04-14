@@ -1,13 +1,17 @@
 import { fillFormWithData } from "./fillFormWithData.js";
+import { getStyleRecommendations, analyzeFormFill } from "./main.js";
 
 let currentStep = 1;
 
 export function collectResumeData() {
+  const photoSrc = document.getElementById("photoPreview")?.src;
+  const isPhotoEmpty = !photoSrc || photoSrc === "http://127.0.0.1:5500/";
+
   return {
     fullName: document.getElementById("fullName").value,
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value,
-    photo: document.getElementById("photoPreview")?.src || null,
+    photo: isPhotoEmpty ? null : photoSrc,
     experience: Array.from(document.querySelectorAll(".experience-item")).map(
       (item) => ({
         company: item.querySelector(".company").value,
@@ -198,24 +202,41 @@ function formatResume(data) {
 export function generateResume() {
   const resumeData = collectResumeData();
   const previewContent = formatResume(resumeData);
+
+  getStyleRecommendations(resumeData);
   document.getElementById("preview-content").innerHTML = previewContent;
   document.getElementById("resume-form").style.display = "none";
   document.getElementById("resume-preview").style.display = "block";
 }
 
+export function prevResumeForm() {
+  document.getElementById("resume-form").style.display = "block";
+  document.getElementById("resume-preview").style.display = "none";
+}
+
+export function saveLocalStorage() {
+  const resumeData = collectResumeData();
+
+  if (resumeData) {
+    localStorage.setItem("draft", JSON.stringify(resumeData));
+    alert("Черновик успешно сохранён!");
+  }
+}
+
 // Функция загрузки данных из localStorage и заполнения формы
 export async function loadFromLocalStorage() {
   // Грузит из mock_data
-  // const response = await fetch("../mock_data/draft.json");
-  // if (!response.ok) {
-  //   throw new Error(`Ошибка HTTP: ${response.status}`);
-  // }
-  // const data = await response.json();
-  // fillFormWithData(data);
-  // document.getElementById("template-selection").style.display = "none";
-  // document.getElementById("resume-form").style.display = "block";
+  const response = await fetch("../mock_data/draft.json");
+  if (!response.ok) {
+    throw new Error(`Ошибка HTTP: ${response.status}`);
+  }
+  const data = await response.json();
+  fillFormWithData(data);
+  analyzeFormFill();
+  document.getElementById("template-selection").style.display = "none";
+  document.getElementById("resume-form").style.display = "block";
 
-  // return data;
+  return data;
 
   // Грузит из localStorage
   const draft = localStorage.getItem("draft");
@@ -232,6 +253,12 @@ export async function loadFromLocalStorage() {
   return null;
 }
 
+export function delFromLocalStorage() {
+  localStorage.removeItem("draft");
+  document.getElementById("restore").style.display = "none";
+  alert("Данные удалены");
+}
+
 // Сброс формы
 export function resetForm() {
   const forms = document.querySelectorAll("form");
@@ -243,4 +270,6 @@ export function resetForm() {
     .querySelectorAll(".step")
     .forEach((step) => step.classList.remove("active"));
   document.getElementById("step1").classList.add("active");
+  document.getElementById("previewContainer").style.display = "none";
+  document.getElementById("photoPreview").src = "";
 }

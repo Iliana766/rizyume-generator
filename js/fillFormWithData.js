@@ -22,10 +22,11 @@ const configurations = {
         placeholder: "Период работы",
       },
       responsibilities: {
+        name:"Обязанности по работе",
         label: "Обязанности",
         selector: "responsibilities",
         type: "textarea",
-        placeholder: "Обязанности",
+        placeholder: "Обязанности по работе",
       },
     },
   },
@@ -153,7 +154,7 @@ function addGenericItem(container, itemClass, dataItem, fieldMappings) {
   let htmlContent = "";
 
   Object.entries(fieldMappings).forEach(([fieldKey, fieldConfig]) => {
-    const { label, selector, type, placeholder, options } = fieldConfig;
+    const { label, selector, type, placeholder, options, name } = fieldConfig;
 
     if (type === "select") {
       htmlContent += `<h3>${label}</h3><select class="${selector}">`;
@@ -166,7 +167,7 @@ function addGenericItem(container, itemClass, dataItem, fieldMappings) {
       htmlContent += "</select>";
     } else if (type === "textarea") {
       const value = dataItem[fieldKey] || "";
-      htmlContent += `<h3>${label}</h3><textarea class="${selector}" placeholder="${placeholder}">${value}</textarea>`;
+      htmlContent += `<h3>${label}</h3><textarea name="${name}" class="${selector}" placeholder="${placeholder}">${value}</textarea>`;
     } else {
       const value = dataItem[fieldKey] || "";
       htmlContent += `<h3>${label}</h3><input type="${type}" class="${selector}" placeholder="${placeholder}" value="${value}" />`;
