@@ -117,21 +117,27 @@ export function addEducation() {
   });
 }
 
-export function addSkill() {
+/**
+ * Добавление навыка
+ * @param {string} skillName передача параметра со значением для поля"Навык"
+ */
+export function addSkill(skillName = "") {
   const container = document.getElementById("skills");
   const newItem = document.createElement("div");
+  const levelIndex = document.querySelectorAll("input.skill").length + 1;
+
   newItem.className = "skill-item";
   newItem.innerHTML = `
         <h3>Навык</h3>
-        <input type="text" placeholder="Укажите свой навык работы" class="skill">
-        <select class="level">
+        <input name="Навык" type="text" placeholder="Укажите свой навык работы" class="skill" value="${skillName}">
+        <select name="Уровень навыка ${levelIndex}" class="level">
             <option disabled selected>Выберите свой уровень</option>
             <option value="начальный">Начальный</option>
             <option value="средний">Средний</option>
             <option value="продвинутый">Продвинутый</option>
         </select>
-    <button type="button" class="remove-btn">Удалить</button>
-    `;
+        <button type="button" class="remove-btn">Удалить</button>
+   `;
   container.appendChild(newItem);
 
   document.getElementById("skills").addEventListener("click", function (e) {
@@ -140,9 +146,15 @@ export function addSkill() {
       item.remove();
     }
   });
+
+  analyzeFormFill();
 }
 
-// Форматирование резюме для предпросмотра
+/**
+ * Форматирование резюме для предпросмотра
+ * @param {Object} data
+ * @returns
+ */
 function formatResume(data) {
   let html = `<h3>${data.fullName}</h3>
                <p>Email: ${data.email}</p>
@@ -209,6 +221,9 @@ export function generateResume() {
   document.getElementById("resume-preview").style.display = "block";
 }
 
+/**
+ * Функция кнопки "Назад" для возвращения на 5 шаг с "Просмотр результата"
+ */
 export function prevResumeForm() {
   document.getElementById("resume-form").style.display = "block";
   document.getElementById("resume-preview").style.display = "none";
@@ -225,20 +240,6 @@ export function saveLocalStorage() {
 
 // Функция загрузки данных из localStorage и заполнения формы
 export async function loadFromLocalStorage() {
-  // Грузит из mock_data
-  const response = await fetch("../mock_data/draft.json");
-  if (!response.ok) {
-    throw new Error(`Ошибка HTTP: ${response.status}`);
-  }
-  const data = await response.json();
-  fillFormWithData(data);
-  analyzeFormFill();
-  document.getElementById("template-selection").style.display = "none";
-  document.getElementById("resume-form").style.display = "block";
-
-  return data;
-
-  // Грузит из localStorage
   const draft = localStorage.getItem("draft");
 
   if (draft) {

@@ -40,7 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document
     .querySelector('[data-action="addSkill"]')
-    .addEventListener("click", addSkill);
+    .addEventListener("click", () => {
+      addSkill();
+    });
 
   document
     .querySelector('[data-action="generateResume"]')

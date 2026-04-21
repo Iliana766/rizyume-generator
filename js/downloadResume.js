@@ -1,5 +1,6 @@
 import { collectResumeData } from "./navigationForms.js";
 
+// Всё для выгрузки в PDF
 export function downloadResume() {
   if (typeof window.jspdf === "undefined") {
     console.error("Библиотека jsPDF не загружена!");
@@ -10,7 +11,7 @@ export function downloadResume() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Добавляем кастомный шрифт (замените на ваш)
+  // Добавление шрифта для PDF
   doc.addFont("./fonts/Roboto-Regular.ttf", "Roboto", "normal");
   doc.addFont("./fonts/Roboto-Bold.ttf", "Roboto", "bold");
   doc.setFont("Roboto");
@@ -23,7 +24,7 @@ export function downloadResume() {
   const sideIndentation = 50;
   let currentY = 30;
 
-  // Заголовок
+  // Заголовок (размеры)
   doc.setFontSize(20);
   doc.text("Резюме", pageWidth / 2, currentY, { align: "center" });
   currentY += 20;
@@ -42,6 +43,7 @@ export function downloadResume() {
           80, // максимальная высота в мм
         );
 
+        // Добавление фотографии в PDF
         const imageType = resumeData.photo
           .split(",")[0]
           .split(";")[0]
@@ -54,7 +56,7 @@ export function downloadResume() {
           imgWidth,
           imgHeight,
         );
-        currentY += imgHeight + 10; // Учитываем высоту изображения + отступ
+        currentY += imgHeight + 10; // Учитываем высоту изображения + отступ под фото
       } else {
         console.warn("Недопустимый формат Data URL:", resumeData.photo);
         doc.text("Фото: формат не поддерживается", margin, currentY);

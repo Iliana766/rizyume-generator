@@ -1,44 +1,45 @@
-const photoInput = document.getElementById("photo");
-const photoPreview = document.getElementById("photoPreview");
-const previewContainer = document.getElementById("previewContainer");
-
-// Обработчик выбора файла
-photoInput.addEventListener("change", function (event) {
-  const file = event.target.files[0];
-
-  if (!file) {
-    previewContainer.style.display = "none";
-    return;
-  }
-
-  if (!file.type.match("image.*")) {
-    alert("Пожалуйста, выберите файл изображения");
-    photoInput.value = "";
-    previewContainer.style.display = "none";
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function (e) {
-    const img = new Image();
-    img.onload = function () {
-      // Сохраняем исходные размеры
-      window.photoWidth = img.width;
-      window.photoHeight = img.height;
-
-      // Устанавливаем Data URL в src img
-      photoPreview.src = e.target.result;
-      previewContainer.style.display = "block";
-    };
-    img.src = e.target.result;
-  };
-
-  reader.readAsDataURL(file);
-});
+import { addSkill } from "./navigationForms.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const draft = localStorage.getItem("draft");
+  const photoInput = document.getElementById("photo");
+  const photoPreview = document.getElementById("photoPreview");
+  const previewContainer = document.getElementById("previewContainer");
+
+  // Обработчик выбора файла
+  photoInput.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+
+    if (!file) {
+      previewContainer.style.display = "none";
+      return;
+    }
+
+    if (!file.type.match("image.*")) {
+      alert("Пожалуйста, выберите файл изображения");
+      photoInput.value = "";
+      previewContainer.style.display = "none";
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const img = new Image();
+      img.onload = function () {
+        // Сохраняем исходные размеры
+        window.photoWidth = img.width;
+        window.photoHeight = img.height;
+
+        // Устанавливаем Data URL в src img
+        photoPreview.src = e.target.result;
+        previewContainer.style.display = "block";
+      };
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
 
   if (draft) {
     document.getElementById("restore").style.display = "block";
@@ -47,6 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("template-select")
     .addEventListener("change", function () {
+      usingTemplates();
+      analyzeFormFill();
       document.getElementById("template-selection").style.display = "none";
       document.getElementById("resume-form").style.display = "block";
     });
@@ -60,7 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
   analyzeFormFill();
 });
 
-// Анализ заполнености полей
+/**
+ * Анализ заполнености полей и вывод пользователю
+ */
 export function analyzeFormFill() {
   const forms = document.querySelectorAll("form");
   const photoSrc = document.getElementById("photoPreview")?.src;
@@ -121,7 +126,11 @@ export function analyzeFormFill() {
   }
 }
 
-// Рекомендации по заполнению
+/**
+ * Рекомендации по заполнению
+ * @param {Object} data
+ * @returns
+ */
 export function getStyleRecommendations(data) {
   const recommendations = [];
 
@@ -166,4 +175,81 @@ export function getStyleRecommendations(data) {
     `;
   }
   return recommendations;
+}
+
+/**
+ * Использование шаблонов для заполнения навыков
+ */
+export function usingTemplates() {
+  const selectElement = document.getElementById("template-select");
+  const selectedValueKey = selectElement.value;
+  const templates = {
+    it: [
+      "Владение языками программирования (Python, Java, JavaScript)",
+      "Знание алгоритмов и структур данных",
+      "Опыт работы с базами данных (SQL, NoSQL)",
+      "Понимание принципов ООП",
+      "Навыки работы с Git и системами контроля версий",
+      "Опыт разработки веб‑приложений (React, Angular, Vue.js)",
+      "Знание основ кибербезопасности",
+      "Умение писать чистый и документированный код",
+      "Опыт работы с облачными платформами (AWS, Azure, GCP)",
+      "Навыки тестирования и отладки ПО",
+    ],
+    marketing: [
+      "Анализ целевой аудитории и рыночных трендов",
+      "Разработка маркетинговых стратегий",
+      "Навыки контент‑маркетинга и копирайтинга",
+      "Опыт работы с инструментами SEO и SEM",
+      "Управление рекламными кампаниями в Google Ads и Яндекс.Директ",
+      "Работа с социальными сетями и SMM",
+      "Аналитика и отчётность (Google Analytics, Яндекс.Метрика)",
+      "Навыки email‑маркетинга",
+      "Понимание основ бренд‑менеджмента",
+      "Опыт A/B‑тестирования и оптимизации конверсии",
+    ],
+    accountant: [
+      "Знание бухгалтерского и налогового учёта",
+      "Работа с программами 1С:Бухгалтерия, SAP, QuickBooks",
+      "Составление и сдача отчётности (баланс, отчёт о прибылях и убытках)",
+      "Налоговое планирование и оптимизация",
+      "Аудит и внутренний контроль",
+      "Расчёт заработной платы и кадровый учёт",
+      "Финансовый анализ и бюджетирование",
+      "Знание МСФО (Международные стандарты финансовой отчётности)",
+      "Контроль дебиторской и кредиторской задолженности",
+      "Взаимодействие с налоговыми органами и аудиторами",
+    ],
+    engineer: [
+      "Чтение и создание технических чертежей (AutoCAD, SolidWorks)",
+      "Знание материаловедения и технологий производства",
+      "Расчёты прочности и моделирование нагрузок",
+      "Основы механики и термодинамики",
+      "Проектирование и оптимизация инженерных систем",
+      "Работа с CAD/CAM‑системами",
+      "Испытания и валидация прототипов",
+      "Знание стандартов и нормативов (ГОСТ, ISO)",
+      "Автоматизация производственных процессов",
+      "Техническое обслуживание и ремонт оборудования",
+    ],
+    manager: [
+      "Стратегическое планирование и постановка целей",
+      "Управление командой и мотивация сотрудников",
+      "Навыки делегирования задач",
+      "Эффективная коммуникация и ведение переговоров",
+      "Принятие управленческих решений",
+      "Бюджетирование и контроль расходов",
+      "Управление проектами (Agile, Scrum, Waterfall)",
+      "Оценка эффективности работы персонала",
+      "Конфликтология и разрешение спорных ситуаций",
+      "Развитие корпоративной культуры и тимбилдинг",
+    ],
+  };
+
+  const skills = templates[selectedValueKey];
+  if (skills) {
+    skills.forEach((skill) => {
+      addSkill(skill);
+    });
+  }
 }

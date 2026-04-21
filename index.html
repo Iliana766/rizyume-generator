@@ -5,175 +5,26 @@
     <title>Конструктор резюме</title>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script type="module" src="fonts/roboto-normal.js"></script>
-    <script type="module" src="./UI/PersonalInformation.js"></script>
-    <script type="module" src="./js/imports.js"></script>
-    <script type="module" src="./js/main.js" defer></script>
+    <script type="module" src="./index.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <div class="container">
       <h1>Конструктор профессионального резюме</h1>
       <div id="result"></div>
-      <!-- Выбор шаблона -->
-      <div id="template-selection">
-        <h2>Выберите шаблон</h2>
 
-        <div id="restore" style="display: none">
-          <h3>Имеется сохранённый черновик</h3>
-          <p>Хотите восстановить ранее введённые данные?</p>
-          <button class="btn btn-primary" data-action="loadFromLocalStorage">
-            Восстановить черновик
-          </button>
-          <button class="btn remove-btn" data-action="delFromLocalStorage">
-            Удалить черновик
-          </button>
-        </div>
-
-        <select id="template-select">
-          <option disabled selected>Выберите профессию</option>
-          <option value="it">IT-специалист</option>
-          <option value="marketing">Маркетолог</option>
-          <option value="accountant">Бухгалтер</option>
-          <option value="engineer">Инженер</option>
-          <option value="manager">Менеджер</option>
-        </select>
-      </div>
+      <template-selection /><!-- Выбор шаблона -->
 
       <!-- Пошаговое заполнение -->
       <div id="resume-form" style="display: none">
-        <!-- Шаг 1: Личные данные -->
-        <personal-information></personal-information>
-
-        <!-- Шаг 2: Опыт работы -->
-        <form id="step2" class="step">
-          <h3 class="experienceStep">Шаг 2: Опыт работы</h3>
-          <div id="work-experience">
-            <div class="experience-item">
-              <h3>Компания</h3>
-              <input
-                name="Название компании"
-                type="text"
-                placeholder="Название компании"
-                class="company"
-                required
-              />
-              <h3>Должность</h3>
-              <input
-                name="Должность"
-                type="text"
-                placeholder="Должности"
-                class="position"
-                required
-              />
-              <h3>Период работы</h3>
-              <input
-                name="Период работы"
-                type="text"
-                placeholder="Период работы"
-                class="period"
-                required
-              />
-              <h3>Обязанности</h3>
-              <textarea
-                name="Обязанности по работе"
-                placeholder="Обязанности по работе"
-                class="responsibilities"
-              ></textarea>
-            </div>
-          </div>
-          <button type="button" data-action="addExperience">
-            Добавить место работы
-          </button>
-          <button type="button" data-action="prevStep">Назад</button>
-          <button type="button" data-action="nextStep">Далее</button>
-        </form>
-
-        <!-- Шаг 3: Образование -->
-        <form id="step3" class="step">
-          <h3 class="experienceStep">Шаг 3: Образование</h3>
-          <div id="education">
-            <div class="education-item">
-              <h3>Учебное заведение</h3>
-              <input
-                name="Учебное заведение"
-                type="text"
-                placeholder="Учебное заведение"
-                class="institution"
-                required
-              />
-              <h3>Специальность</h3>
-              <input
-                name="Специальность"
-                type="text"
-                placeholder="Специальность"
-                class="specialty"
-                required
-              />
-              <h3>Годы обучения</h3>
-              <input
-                name="Годы обучения"
-                type="text"
-                placeholder="Укажите годы обучения"
-                class="years"
-                required
-              />
-            </div>
-          </div>
-          <button type="button" data-action="addEducation">
-            Добавить образование
-          </button>
-          <button type="button" data-action="prevStep">Назад</button>
-          <button type="button" data-action="nextStep">Далее</button>
-        </form>
-
-        <form id="step4" class="step">
-          <h3 class="experienceStep">Шаг 4: Навыки</h3>
-          <div id="skills">
-            <div class="skill-item">
-              <h3>Навык</h3>
-              <input
-                name="Навык"
-                type="text"
-                placeholder="Укажите свой навык"
-                class="skill"
-                required
-              />
-              <select class="level">
-                <option disabled selected>Выберите свой уровень</option>
-                <option value="начальный">Начальный</option>
-                <option value="средний">Средний</option>
-                <option value="продвинутый">Продвинутый</option>
-              </select>
-            </div>
-          </div>
-          <button type="button" data-action="addSkill">Добавить навык</button>
-          <button type="button" data-action="prevStep">Назад</button>
-          <button type="button" data-action="nextStep">Далее</button>
-        </form>
-        <form id="step5" class="step">
-          <h3 class="experienceStep">Шаг 5: Дополнительная информация</h3>
-          <textarea
-            name="Дополнительная информация"
-            id="additional"
-            placeholder="Курсы, сертификаты, языки и т.д."
-          ></textarea>
-          <button type="button" data-action="prevStep">Назад</button>
-          <button type="button" data-action="generateResume">
-            Сгенерировать резюме
-          </button>
-        </form>
+        <personal-information /><!-- Шаг 1: Личные данные -->
+        <experience-step /><!-- Шаг 2: Опыт работы -->
+        <education-step /><!-- Шаг 3: Образование -->
+        <skills-step /><!-- Шаг 4: Навыки -->
+        <additional-step /><!-- Шаг 5: Дополнительная информация -->
       </div>
 
-      <!-- Просмотр результата -->
-      <div id="resume-preview" style="display: none">
-        <h2>Ваше резюме</h2>
-        <div id="preview-content"></div>
-        <button type="button" data-action="prevResumeForm">Назад</button>
-        <button data-action="downloadResume">Скачать PDF</button>
-        <button data-action="resetForm">Создать новое резюме</button>
-        <button data-action="saveLocalStorage">Сохранить черновик</button>
-        <div id="recomedations">Рекомендации по заполнению</div>
-      </div>
+      <resume-preview /><!-- Просмотр результата -->
     </div>
   </body>
 </html>

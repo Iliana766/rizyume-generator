@@ -75,7 +75,7 @@ h3 {
   margin: 0px;
 }
 
-.experienceStep {
+.steps {
   margin-bottom: 30px;
 }
 
@@ -108,29 +108,16 @@ body {
   padding: 20px;
 }
 
-/* Структура страницы (пока под ?) */
-/* .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-}
-
-max-width: 900px {
-  .container {
-    grid-template-columns: 1fr;
-  }
-} */
-
 /* Динамческие блоки (опыт, образование,навыки) */
 .dynamic-blocks {
   margin-top: 10px;
 }
 
+.personal-item,
 .education-item,
 .experience-item,
-.skill-item {
+.skill-item,
+.additional-item {
   background: #f8fafc;
   padding: 15px;
   border-radius: 8px;

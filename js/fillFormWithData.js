@@ -22,7 +22,7 @@ const configurations = {
         placeholder: "Период работы",
       },
       responsibilities: {
-        name:"Обязанности по работе",
+        name: "Обязанности по работе",
         label: "Обязанности",
         selector: "responsibilities",
         type: "textarea",
@@ -142,12 +142,24 @@ function fillDataGeneric(containerId, itemClass, dataArray, fieldMappings) {
       });
     } else {
       // Добавляем новый блок, если не хватает
-      addGenericItem(container, itemClass, dataItem, fieldMappings);
+      addGenericItem(
+        container,
+        containerId,
+        itemClass,
+        dataItem,
+        fieldMappings,
+      );
     }
   });
 }
 
-function addGenericItem(container, itemClass, dataItem, fieldMappings) {
+function addGenericItem(
+  container,
+  containerId,
+  itemClass,
+  dataItem,
+  fieldMappings,
+) {
   const item = document.createElement("div");
   item.className = itemClass;
 
@@ -174,6 +186,16 @@ function addGenericItem(container, itemClass, dataItem, fieldMappings) {
     }
   });
 
+  htmlContent += '<button type="button" class="remove-btn">Удалить</button>';
   item.innerHTML = htmlContent;
   container.appendChild(item);
+
+  document
+    .getElementById(`${containerId}`)
+    .addEventListener("click", function (e) {
+      if (e.target.classList.contains("remove-btn")) {
+        const item = e.target.closest(`.${itemClass}`);
+        item.remove();
+      }
+    });
 }
