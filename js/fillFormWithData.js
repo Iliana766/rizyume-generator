@@ -79,7 +79,7 @@ const configurations = {
   },
 };
 
-// Функция заполнения формы данными
+/** Функция заполнения форм на странице данными из localStorage */
 export function fillFormWithData(data) {
   // Основные данные
   document.getElementById("fullName").value = data.fullName || "";

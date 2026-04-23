@@ -1,5 +1,6 @@
 import { addSkill } from "./navigationForms.js";
 
+// Проверка всего
 document.addEventListener("DOMContentLoaded", function () {
   const draft = localStorage.getItem("draft");
   const photoInput = document.getElementById("photo");
@@ -14,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
       previewContainer.style.display = "none";
       return;
     }
-
+    // Проверка типа файла
     if (!file.type.match("image.*")) {
       alert("Пожалуйста, выберите файл изображения");
       photoInput.value = "";
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.photoWidth = img.width;
         window.photoHeight = img.height;
 
-        // Устанавливаем Data URL в src img
+        // Устанавливаем Data URL изображения в атрибут src img
         photoPreview.src = e.target.result;
         previewContainer.style.display = "block";
       };
@@ -85,19 +86,39 @@ export function analyzeFormFill() {
 
   allFields.forEach((field) => {
     let isFilled = false;
+    console.log("type:", field.type, ", tagName:", field.tagName, field);
 
-    if (field.type === "checkbox") {
-      isFilled = field.checked;
-    } else if (field.type === "radio") {
-      const name = field.name;
-      isFilled =
-        document.querySelector(`input[name="${name}"]:checked`) !== null;
-    } else if (field.tagName === "SELECT") {
-      isFilled = field.selectedIndex > 0;
-    } else if (field.type === "file") {
-      isFilled = (field.files && field.files.length > 0) || !isPhotoEmpty;
-    } else {
-      isFilled = field.value.trim() !== "";
+    switch (field.type) {
+      case "checkbox":
+        isFilled = field.checked;
+        break;
+
+      case "radio":
+        const name = field.name;
+        isFilled =
+          document.querySelector(`input[name="${name}"]:checked`) !== null;
+        break;
+
+      case "file":
+        isFilled = (field.files && field.files.length > 0) || !isPhotoEmpty;
+        break;
+
+      case "email":
+      case "tel":
+      case "text":
+      case "textarea":
+        isFilled = field.value.trim() !== "";
+        break;
+
+      case "select-one":
+      case "select-multiple":
+        isFilled = field.selectedIndex > -1;
+        break;
+
+      default:
+        // Универсальная проверка для всех остальных типов полей
+        isFilled = !!field.value && field.value.trim() !== "";
+        break;
     }
 
     if (isFilled) {
@@ -113,6 +134,7 @@ export function analyzeFormFill() {
 
   // Вывод результата на страницу (с проверкой существования элемента)
   const resultElement = document.getElementById("result");
+
   if (resultElement) {
     resultElement.innerHTML = `
       <p><strong>Заполнено:</strong> ${filledCount} из ${totalFields} полей</p>

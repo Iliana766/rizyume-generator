@@ -1,2 +1,2 @@
-import "./js/index.js";
-import "./UI/index.js";
+export * from "./js/index.js";
+export * from "./UI/index.js";

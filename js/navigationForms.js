@@ -3,10 +3,13 @@ import { getStyleRecommendations, analyzeFormFill } from "./main.js";
 
 let currentStep = 1;
 
+/** Сбор данных с форм на странице */
 export function collectResumeData() {
+  // Обработка фотографии
   const photoSrc = document.getElementById("photoPreview")?.src;
   const isPhotoEmpty = !photoSrc || photoSrc === "http://127.0.0.1:5500/";
 
+  // Сбор базовых данных
   return {
     fullName: document.getElementById("fullName").value,
     email: document.getElementById("email").value,
@@ -37,10 +40,13 @@ export function collectResumeData() {
   };
 }
 
+/**
+ * Получение формы текущего шага
+ */
 export function nextStep() {
   const form = document.getElementById(`step${currentStep}`); // или конкретный ID формы
 
-  // reportValidity() покажет стандартные подсказки браузера
+  // reportValidity() проверяет, заполена ли форма корректно
   if (!form.reportValidity()) {
     // Если есть ошибки валидации, останавливаем выполнение
     return false;
@@ -50,12 +56,18 @@ export function nextStep() {
   document.getElementById(`step${currentStep}`).classList.add("active");
 }
 
+/**
+ * Снятие активности с текущего шага
+ */
 export function prevStep() {
   document.getElementById(`step${currentStep}`).classList.remove("active");
   currentStep--;
   document.getElementById(`step${currentStep}`).classList.add("active");
 }
 
+/**
+ * Добаление блока с опытом работы
+ */
 export function addExperience() {
   const container = document.getElementById("work-experience");
   const newItem = document.createElement("div");
@@ -156,9 +168,19 @@ export function addSkill(skillName = "") {
  * @returns
  */
 function formatResume(data) {
-  let html = `<h3>${data.fullName}</h3>
-               <p>Email: ${data.email}</p>
-               <p>Телефон: ${data.phone}</p>`;
+  let html = "";
+
+  if (data.photo) {
+    html += `
+      <img class="photo-preview" src="${data.photo}" alt="Предпросмотр фото" />
+    `;
+  }
+
+  html += `
+    <h3>${data.fullName}</h3>
+    <p>Email: ${data.email}</p>
+    <p>Телефон: ${data.phone}</p>
+  `;
 
   // Опыт работы — выводим только если есть заполненные пункты
   if (data.experience.length > 0) {
@@ -212,9 +234,11 @@ function formatResume(data) {
 }
 
 export function generateResume() {
+  // Получение данных из заполненых форм
   const resumeData = collectResumeData();
   const previewContent = formatResume(resumeData);
 
+  // Далее получаем рекомендации по заполнению
   getStyleRecommendations(resumeData);
   document.getElementById("preview-content").innerHTML = previewContent;
   document.getElementById("resume-form").style.display = "none";
@@ -229,6 +253,7 @@ export function prevResumeForm() {
   document.getElementById("resume-preview").style.display = "none";
 }
 
+/** Сохранение черновика */
 export function saveLocalStorage() {
   const resumeData = collectResumeData();
 
@@ -238,31 +263,32 @@ export function saveLocalStorage() {
   }
 }
 
-// Функция загрузки данных из localStorage и заполнения формы
+/** Функция загрузки данных из localStorage и заполнения формы */
 export async function loadFromLocalStorage() {
-  const draft = localStorage.getItem("draft");
+  const draftData = localStorage.getItem("draft");
 
-  if (draft) {
-    const data = JSON.parse(draft);
+  if (draftData) {
+    const data = JSON.parse(draftData);
     fillFormWithData(data);
-
+    // Скрываем блок выбора шаблона потому что уже есть заполненная форма
     document.getElementById("template-selection").style.display = "none";
     document.getElementById("resume-form").style.display = "block";
 
-    return data;
+    analyzeFormFill();
   }
-  return null;
 }
 
+/** Удаление черновика */ 
 export function delFromLocalStorage() {
   localStorage.removeItem("draft");
   document.getElementById("restore").style.display = "none";
   alert("Данные удалены");
 }
 
-// Сброс формы
+/** Сброс формы */
 export function resetForm() {
   const forms = document.querySelectorAll("form");
+  
   forms.forEach((form) => form.reset());
   document.getElementById("resume-form").style.display = "block";
   document.getElementById("resume-preview").style.display = "none";

@@ -1,2 +1,2 @@
-import "./main.js";
-import "./imports.js";
+export * from "./main.js";
+export * from "./imports.js";
